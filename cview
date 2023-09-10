@@ -1,0 +1,84 @@
+
+cview() {
+		
+	dir_name=$1	
+	for i in $(ls $1) 
+	do 
+		if [ -d "$i" ]
+		then
+			dir_name=$i
+		fi
+
+		file_c=$(find $dir_name -type f -name "*.c" -printf "%f ")
+		title="----- Resultat du fichier(s) : $dir_name/$file_c ------"
+			
+		echo $'\e[1;34m'
+		printf "%*s\n" $COLUMNS | tr ' ' '='
+		printf "\n%*s\n" $(((${#title}+$COLUMNS)/2)) "$title"
+		printf "\n%*s\n" $COLUMNS | tr ' ' '='
+		
+		echo $'\e[0m'
+		
+		echo $'\e[1;37m'
+		for file in $file_c
+		do
+			file_name=$(echo $file | sed -r 's/.c//g')
+			file_title="----- $file -----"
+			slash="---------------------"
+	
+			printf "%*s\n" $(((${#slash}+$COLUMNS)/2)) "$slash"
+                        printf "%*s\n" $(((${#file_title}+$COLUMNS)/2)) "$file_title"
+                        printf "%*s\n\n" $(((${#slash}+$COLUMNS)/2)) "$slash"
+			
+			cat ./$dir_name/$file
+
+			printf "%*s\n" $(((${#slash}+$COLUMNS)/2)) "$slash"
+                        printf "%*s\n" $(((${#file_title}+$COLUMNS)/2)) "$file_title"
+                        printf "%*s\n" $(((${#slash}+$COLUMNS)/2)) "$slash"
+	
+			cat ./$dir_name/$file | tail -n $(($(wc -l < ./$dir_name/$file) - 11)) | sed -r 's/\/\*//g' |  sed -r 's/\*\///g' > ./$dir_name/copy_$file_name.c
+		done
+		
+		copy_c=$(find $dir_name -type f -name "copy*.c" -printf "./$dir_name/%f ")		
+
+		cc -Werror -Wall $copy_c -o ./$dir_name/a.out
+		
+		if [ -f "./$dir_name/a.out" ]
+		then
+
+			printf "\n\n%s\n\n" 'Sortie de votre programe :'
+			echo $'\e[0;37m'
+			./$dir_name/a.out
+			echo $'\e[0m'
+			
+			message="----- Bravo ! Le fichier(s) $dir_name/$file_c a compilé -----"
+			echo $'\e[1;32m'
+			printf "\n%*s" $COLUMNS | tr ' ' '='
+                	printf "%*s\n" $(((${#message}+$COLUMNS)/2)) "$message"
+               		printf "%*s" $COLUMNS | tr ' ' '='
+			echo $'\e[0m'
+		else
+			message="----- Erreur ! Le fichier(s) ./$dir_name/$file_c n'a pas compilé -----"
+			echo $'\e[1;31m'
+			printf "\n%*s" $COLUMNS | tr ' ' '='
+                        printf "%*s\n" $(((${#message}+$COLUMNS)/2)) "$message"
+                        printf "%*s" $COLUMNS | tr ' ' '='
+                        echo $'\e[0m'
+		fi
+		echo $'\e[0m'
+
+		for file in $file_c
+                do
+                        file_name=$(echo $file | sed -r 's/.c//g')
+			rm ./$dir_name/copy_$file_name.c
+			rm ./$dir_name/a.out
+		done
+		
+		echo $'\e[1;36m'
+		printf "%*s\n" $COLUMNS | tr ' ' '='
+		echo $'\e[0m'
+
+		
+	done; 
+}
+
