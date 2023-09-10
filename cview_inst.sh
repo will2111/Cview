@@ -1,16 +1,15 @@
 #!bin/bash/
 
-if ! [ -x $(command -v cview) ] 
+test="$(cat ~/.bash_aliases | grep cview)"
+
+if [ -z "$test" ] 
 then
-	if [ -f "~/.bash_aliases" ]
+	if [ ! -f "~/.bash_aliases" ]
 	then
-		cat ./cview >> ~/.bash_aliases
-	else
 		touch ~/.bash_aliases
-		cat ./cview >> ~/.bash_aliases
 	fi
 	
-	source ~/.bash_aliases
+	cat ./cview >> ~/.bash_aliases
 	echo $'\e[1:37m'
 	printf "\n\n%s\n" 'La commande cview a bien été installé'
 	printf "\n%s\n\n" 'cat ~/.bash_aliases | grep cview'
