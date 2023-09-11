@@ -30,7 +30,7 @@ cview() {
                         printf "%*s\n" $(((${#file_title}+$COLUMNS)/2)) "$file_title"
                         printf "%*s\n\n" $(((${#slash}+$COLUMNS)/2)) "$slash"
 			
-			cat ./$dir_name/$file
+			cat -n ./$dir_name/$file
 
 			printf "%*s\n" $(((${#slash}+$COLUMNS)/2)) "$slash"
                         printf "%*s\n" $(((${#file_title}+$COLUMNS)/2)) "$file_title"
@@ -39,6 +39,7 @@ cview() {
 			cat ./$dir_name/$file | tail -n $(($(wc -l < ./$dir_name/$file) - 11)) | sed -r 's/\/\*//g' |  sed -r 's/\*\///g' > ./$dir_name/copy_$file_name.c
 		done
 		
+		printf "%*s\n\n" $COLUMNS | tr ' ' '_'
 		copy_c=$(find $dir_name -type f -name "copy*.c" -printf "./$dir_name/%f ")		
 
 		cc -Werror -Wall $copy_c -o ./$dir_name/a.out
