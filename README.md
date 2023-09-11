@@ -17,7 +17,8 @@ AUTHOR = wfotso (Intra 42) william_2112 (Discord)
 - check cview alias in ~/.bash_aliases with command : cat ~/.bash_aliases | grep cview (if it shows nothing, there is a problem).
 
 - Start a new terminal and you should have the command .
-If you've followed the instruction to and still can't use the command. Don't execute the cview_inst.sh twice, contact me I will be happy to help, my username is wfotso on the 42 intra.
+  
+If you've followed the instruction and still can't use the command. Don't execute the cview_inst.sh twice, contact me I will be happy to help, my username is wfotso on the 42 intra.
 
 ----- USE -----
 
