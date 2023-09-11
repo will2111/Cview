@@ -34,7 +34,7 @@ cview() {
 
 			printf "%*s\n" $(((${#slash}+$COLUMNS)/2)) "$slash"
                         printf "%*s\n" $(((${#file_title}+$COLUMNS)/2)) "$file_title"
-                        printf "%*s\n" $(((${#slash}+$COLUMNS)/2)) "$slash"
+                        printf "%*s\n\n" $(((${#slash}+$COLUMNS)/2)) "$slash"
 	
 			cat ./$dir_name/$file | tail -n $(($(wc -l < ./$dir_name/$file) - 11)) | sed -r 's/\/\*//g' |  sed -r 's/\*\///g' > ./$dir_name/copy_$file_name.c
 		done
@@ -46,7 +46,7 @@ cview() {
 		if [ -f "./$dir_name/a.out" ]
 		then
 
-			printf "\n\n%s\n\n" 'Sortie de votre programe :'
+			printf "\n%s\n\n" 'Sortie de votre programe :'
 			echo $'\e[0;37m'
 			./$dir_name/a.out
 			echo $'\e[0m'
