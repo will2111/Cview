@@ -7,7 +7,7 @@ then
 	cat ./cview >> ~/.zshrc
 	echo $'\e[1:37m'
 	printf "\n\n%s\n" 'La commande cview a bien été installé'
-	printf "\n%s\n\n" 'cat ~/.bash_aliases | grep cview'
+	printf "\n%s\n\n" 'cat ~/.zshrc | grep cview'
 	echo $'\e[1:37m'
 
 else
