@@ -43,7 +43,7 @@ cview() {
 		printf "%*s\n\n" $COLUMNS | tr ' ' '_'
 		copy_c=$(find $dir_name -type f -name "copy*.c" -printf "./$dir_name/%f")		
 
-		cc -Werror -Wall $copy_c -o ./$dir_name/a.out
+		cc -Wextra -Werror -Wall $copy_c -o ./$dir_name/a.out
 		
 		if [ -f "./$dir_name/a.out" ]
 		then
